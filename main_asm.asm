@@ -1,7 +1,8 @@
 ;*********************************************************************
 ;   Fecha: 13 Mayo 2021 
 ;*********************************************************************
-
+;inclusión de librería de macros
+include Motor_Solar.LIB 
 .model
 .stack
 .data
@@ -100,6 +101,33 @@ inicio:
 	    CADENA_COLOR        bienvenida,   40,  0, 40,  1,  0,   2  
 	    CALL CLEAN_SCREEN
 	    ;ACTIVAR PAG2
+	    #start=stepper_motor.exe# 
+	    ;---
+        pasos = 02h ; 32 (decimal)       
+datcw   db 0000_0011b
+        db 0000_0110b
+        db 0000_1100b
+        db 0000_1001b
+        
+        MOV CX,pasos           ;inicializa el contador con el numero de pasos
+MOTOR_INICIO: MOV BX, offset datcw ;inicializa el apuntado
+        MOV SI,0             ;inicializa el contador
+SIGUIENTE_PASO:
+WAIT:   IN AL,07H            ;obtiene la informacion del puerto 07H
+        TEST AL,10000000b
+        JZ WAIT
+        MOV AL, [BX][SI]
+        OUT 7, AL
+        INC SI
+        CMP SI, 4
+        JC SIGUIENTE_PASO
+        MOV SI,0
+        DEC CL
+        JZ EscrituraReporte1
+        JMP SIGUIENTE_PASO
+EscrituraReporte1: ;escribir a archivo
+	    ;---
+	    ;MOTOR_CONTROL 15H
 	    CALL TECLA
 	        MOV AH,5
 	        MOV AL,2
