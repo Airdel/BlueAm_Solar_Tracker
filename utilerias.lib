@@ -12,7 +12,22 @@ CADENA_COLOR MACRO cadena,long,ren,col,pag,modo,color
         MOV AL,modo     ;modo
         MOV BL,color    ;Atributo (Color)
         INT 10H
-CADENA COLOR ENDM
+CADENA_COLOR ENDM
+
+CADENA_SIN_COLOR MACRO cadena
+         MOV AH,9
+         LEA DX,cadena
+         INT 21H
+CADENA_SIN_COLOR ENDM
+
+CURSOR MACRO R,C,P
+     MOV AH,2
+     MOV DH,R
+     MOV DL,C
+     MOV BH,P
+     INT 10H
+CURSOR ENDM
+
 
 cambiar_pagina macro num
 	mov ah,5
