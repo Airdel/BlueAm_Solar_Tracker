@@ -73,10 +73,28 @@ logo27 db 'hbBBBBBBBB%YPBB9gBBBBo]BBBBQ]]QBBgjYYttttt%BBBBBCeBBBBBBBZu#BBBBBBPtp
 
     bienvenida      db  ' Bienvenidos a Blue Amethyst!   '
     proceso         db  'Ventana de menu'
-;*****************************************************
-;                   MACROS                            
+;**************************MACROS***************************
+            
+CADENA_COLOR MACRO cadena,long,ren,col,pag,modo,color
+        MOV AH,19
+        LEA BP,cadena   ;Cadena
+        MOV CX,long     ;longitud de cadena
+        MOV DH,ren      ;Renglon
+        MOV DL,col      ;columna
+        MOV BH,pag      ;pagina
+        MOV AL,modo     ;modo
+        MOV BL,color    ;Atributo (Color)
+        INT 10H
+CADENA_COLOR ENDM  
 
-;*****************************************FIN MACROS**    
+CADENA_SIN_COLOR MACRO cadena
+         MOV AH,9
+         LEA DX,cadena
+         INT 21H
+CADENA_SIN_COLOR ENDM
+                         
+
+;*****************************************FIN MACROS**********  
 .code
 inicio:
     MOV AX,@DATA
