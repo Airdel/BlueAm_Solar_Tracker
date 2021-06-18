@@ -1,8 +1,8 @@
-;/=====================\       
-;|      Macros         | 
-;\=====================/
+;/================================\       
+;|      Macros a utilizar         | 
+;\===============================/
 
-CADENA_COLOR MACRO cadena,long,ren,col,pag,modo,color
+imprimir_cadena macro cadena,long,ren,col,pag,modo,color
         MOV AH,19
         LEA BP,cadena   ;Cadena
         MOV CX,long     ;longitud de cadena
@@ -12,22 +12,15 @@ CADENA_COLOR MACRO cadena,long,ren,col,pag,modo,color
         MOV AL,modo     ;modo
         MOV BL,color    ;Atributo (Color)
         INT 10H
-CADENA_COLOR ENDM
+imprimir_cadena ENDM
 
-CADENA_SIN_COLOR MACRO cadena
-         MOV AH,9
-         LEA DX,cadena
-         INT 21H
-CADENA_SIN_COLOR ENDM
-
-CURSOR MACRO R,C,P
+cursor MACRO R,C,P
      MOV AH,2
      MOV DH,R
      MOV DL,C
      MOV BH,P
      INT 10H
-CURSOR ENDM
-
+cursor ENDM
 
 cambiar_pagina macro num
 	mov ah,5
@@ -39,15 +32,7 @@ tecla macro
 	mov ah,0
         int 16h 
 tecla endm
- 
-cursor  macro  renglon,columna,pagina
-        mov ah,2  
-        mov dh,renglon 
-        mov dl,columna   
-        mov bh,pagina   
-        int 10h
-cursor  endm 
-                    
+                     
 imprimir_cadena_sin_color macro cadena
 	mov ah,9
 	lea dx,cadena 
@@ -56,8 +41,8 @@ imprimir_cadena_sin_color endm
                     
 recibir_entrada macro
 	mov ah,2  ; cursor
-	mov dh,17 ; renglon
-	mov dl,50 ; columna 
+	mov dh,12 ; renglon
+	mov dl,46 ; columna 
 	mov bh,0  ; pagina
  	int 10h
 		mov ah,1
