@@ -33,5 +33,5 @@ WAIT:   IN AL,07H            ;obtiene la informacion del puerto 07H
         JZ LOOP1
         JMP SIGUIENTE_PASO
 LOOP1: ;escribir a archivo
-
+; 03 06 0C 09
 MOTOR_CONTROL ENDM

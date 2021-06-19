@@ -36,7 +36,10 @@ include Motor_Solar.lib
     ruta                db 'C:\BlueAM',0
     rutaArchivo         db 'C:\BlueAM\Reporte.txt',0
     ManejadorArchivos   dw 0    
-    
+    datcw   db  0000_0011b
+            db  0000_0110b
+            db  0000_1100b
+            db  0000_1001b
     ;menu---------------------------------------------------------
     cad1    db  'Consola de control ',34,'BlueAM',34,'$'
     cad2    db  'Controles:$'
@@ -68,8 +71,7 @@ inicio:
     leer_archivo manejadorArchivos,leido
     jc errorLeer
     ;Sin errores
-        imprimir_cadena leido,2000,2,0,1,0,0ah
-        tecla
+        imprimir_cadena leido,1146,2,0,1,0,0ah
         cambiar_pagina 0 
 ;*END - l o g o *****************************************************************
 
@@ -94,7 +96,7 @@ imprimir_menu: ;impresion de menu principal
     imprimir_cadena cad5,   36,         9,          23,         0,      0,      0ah
     imprimir_cadena cad6,   10,         10,         23,         0,      0,      0ah
     imprimir_cadena cad7,   25,         12,         23,         0,      0,      0ah         
-
+    MOV BX, offset datcw
 recibir_entrada:
     cursor 12,46,0
     recibir_entrada
@@ -120,36 +122,88 @@ je fin
 
 ;   Alineacion automatica
 automatico:
-;---Control del motor opcion automatica!
-	    XOR AX,AX
-	    XOR BX,BX
-	    XOR CX,CX
-        pasos = 02h ; 32 (decimal)       
-datcw   db 0000_0011b
-        db 0000_0110b
-        db 0000_1100b
-        db 0000_1001b
+
+derecha10:
+        MOV AX,0100H
+        MOV DS,AX
+        MOV DI,1100H
+        MOV AX,0000H
+        MOV CL,04H
         
-        MOV CX,pasos           ;inicializa el contador con el numero de pasos
-MOTOR_INICIO: MOV BX, offset datcw ;inicializa el apuntado
-        MOV SI,0             ;inicializa el contador
-SIGUIENTE_PASO:
-WAIT:   IN AL,07H            ;obtiene la informacion del puerto 07H
-        TEST AL,10000000b
-        JZ WAIT
-        MOV AL, [BX][SI]
-        OUT 7, AL
+                       ; 03 06 0C 09 PARA DERECHA
+        MOV AX,03H
+        MOV [DI],AX
+        INC DI
+        
+        MOV AX,06H   
+        MOV [DI],AX
+        INC DI
+        
+        MOV AX,0CH
+        MOV [DI],AX
+        INC DI
+        
+        MOV AX,09H
+        MOV [DI],AX
+        INC DI
+                           
+        MOV CX,01H
+START:  MOV BX,1100H
+        MOV SI,0
+NEXT_STEP:
+        MOV AL,[BX][SI]
+        OUT 7,AL
         INC SI
-        CMP SI, 4
-        JC SIGUIENTE_PASO
+        CMP SI,4
+        JC NEXT_STEP
         MOV SI,0
         DEC CL
-        JZ EscrituraReporte1
-        JMP SIGUIENTE_PASO
-derecha10:
+        JZ LOOP1
+        JMP NEXT_STEP
+LOOP1: jmp recibir_entrada      
+
+
 
 izquierda10:     
-     
+MOV AX,0100H
+        MOV DS,AX
+        MOV DI,1100H
+        MOV AX,0000H
+        MOV CL,04H
+        
+                       ; 03 06 0C 09 PARA DERECHA
+                       
+                       ; 09 0C 06 03 PARA IZQUIERDA
+        MOV AX,09H
+        MOV [DI],AX
+        INC DI
+        
+        MOV AX,0CH   
+        MOV [DI],AX
+        INC DI
+        
+        MOV AX,06H
+        MOV [DI],AX
+        INC DI
+        
+        MOV AX,03H
+        MOV [DI],AX
+        INC DI
+                           
+        MOV CX,01H
+START_I:  MOV BX,1100H
+        MOV SI,0
+NEXT_STEP_I:
+        MOV AL,[BX][SI]
+        OUT 7,AL
+        INC SI
+        CMP SI,4
+        JC NEXT_STEP_I
+        MOV SI,0
+        DEC CL
+        JZ LOOP1
+        JMP NEXT_STEP_I
+LOOP1_I: jmp recibir_entrada     
 
 EscrituraReporte1: ;escribir a archivo
 	    ;---
