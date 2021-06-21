@@ -27,11 +27,6 @@ cambiar_pagina macro num
         mov al,num    
         int 10h            
 cambiar_pagina endm
-
-tecla macro
-	mov ah,0
-        int 16h 
-tecla endm
                      
 imprimir_cadena_sin_color macro cadena
 	mov ah,9
@@ -97,10 +92,10 @@ leer_hora MACRO
 leer_hora ENDM
 
 escribir_archivo MACRO manejador,totalEscribir,datosEscribir
-             MOV AH,40H ; Escribir en el archivo
-             MOV BX,MANEJADOR ; Asignar el manejador
-             MOV CX,totalEscribir ; 27
-             LEA DX,datosEscribir
-             INT 21H 
+        MOV AH,40H             ;Int. para escritura    
+        MOV BX,manejador   ;Asignacion de manejador
+        MOV CX,totalEscribir   ;50 caracteres
+        LEA DX,datosEscribir
+        INT 21H
 escribir_archivo ENDM
 
