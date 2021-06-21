@@ -1,0 +1,9 @@
+;|INSTRUCCIONES                                                                                                            |  
+;|                                                                                                                         |
+;|    1.- ESTE PROYECTO REALIZA LA LECTURA DE UN ARCHIVO DE TEXTO PARA LA CARGA DEL LOGO;				   |
+;|	  PARA LA CORRECTA EJECUCION DE ESTE PROGRAMA, PRIMERAMENTE SE REQUIERE UBICAR EL ARCHIVO "Logo.txt"               |
+;|        EN LA UBICACION "C:\emu8086\vdrive\C"                                                                            |
+;|    2.- Si se desea volver a ejecutar el programa, borrar el directorio "C:\emu8086\vdrive\C\BlueAM" que fue creado      |
+;|        y volver a ejecutar la emulacion
+
+;|    3.- el archivo inicial es: ProyectoBlueAM.asm
