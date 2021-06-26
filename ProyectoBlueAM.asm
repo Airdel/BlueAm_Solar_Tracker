@@ -6,7 +6,10 @@
 ;|                                                                                                                         |
 ;|-------------------------------------------------------------------------------------------------------------------------|
 ;|INSTRUCCIONES                                                                                                            |  
-;|                                                                                                                         |
+;|    
+;|     Quizá el error tenga que ver con la ubicacion del proyecto, intente poner los archivos primeramente en la carpeta
+;|      'C:\BlueAm_Solar_Tracker'
+;|                                                                                                                     |
 ;|    1.- ESTE PROYECTO REALIZA LA LECTURA DE UN ARCHIVO DE TEXTO PARA LA CARGA DEL LOGO;				   |
 ;|	  PARA LA CORRECTA EJECUCION DE ESTE PROGRAMA, PRIMERAMENTE SE REQUIERE UBICAR EL ARCHIVO "Logo.txt"               |
 ;|        EN LA UBICACION "C:\emu8086\vdrive\C"                                                                            |
